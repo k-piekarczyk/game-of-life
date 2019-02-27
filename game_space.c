@@ -57,8 +57,8 @@ bool_t does_cell_die(game_space_t *game_space, unsigned int x, unsigned int y) {
 
     unsigned int live_n = count_live_neighbours(game_space, x, y);
 
-    if (live_n < 2 || live_n > 3) return FALSE;
-    else return TRUE;
+    if (live_n < 2 || live_n > 3) return TRUE;
+    else return FALSE;
 }
 
 bool_t does_cell_revive(game_space_t *game_space, unsigned int x, unsigned int y) {
@@ -111,17 +111,28 @@ void run_iteration(game_space_t *game_space) {
     unsigned int x_dim = game_space->x_dim;
     unsigned int y_dim = game_space->y_dim;
 
-    unsigned char **lookup_plane;
+    game_space_t *lookup_space = copy_game_space(game_space);
 
-    for (int i=0; i<x_dim; i++) {
-        for (int j=0; j<y_dim; j++) {
+    for (unsigned int i = 0; i < x_dim; i++) {
+        for (unsigned int j = 0; j < y_dim; j++) {
 
+            if (check_cell_state(lookup_space, i, j) == DEAD) {
+                if (does_cell_revive(lookup_space, i, j) == TRUE)
+                    change_cell_state(game_space, i, j);
+            } else {
+                if (does_cell_die(lookup_space, i, j) == TRUE)
+                    change_cell_state(game_space, i, j);
+            }
         }
     }
+
+    free_game_space(lookup_space);
+
+    game_space->current_iteration++;
 }
 
 void print_game_state(game_space_t *game_space) {
-    printf("Iteration %d of %d:\n", game_space->current_iteration + 1, game_space->max_iterations);
+    printf("Iteration %d of %d:\n", game_space->current_iteration, game_space->max_iterations);
 
     for (int i = 0; i < game_space->y_dim; i++) {
         for (int j = 0; j < game_space->x_dim; j++) {
@@ -129,4 +140,27 @@ void print_game_state(game_space_t *game_space) {
         }
         printf("\n");
     }
+}
+
+void free_game_space(game_space_t *game_space) {
+    for (int i = 0; i < game_space->x_dim; i++) {
+        free(game_space->plane[i]);
+    }
+    free(game_space->plane);
+    free(game_space);
+}
+
+void run_game_of_life(game_space_t *game_space, unsigned int snapshot_freq) {
+    printf("Begining Game of Life: %d iterations, snapshot every %d iterations.\n\n", game_space->max_iterations, snapshot_freq);
+
+    print_game_state(game_space);
+
+    while(game_space->current_iteration < game_space->max_iterations) {
+        run_iteration(game_space);
+
+        if (game_space->current_iteration % snapshot_freq == 0 || game_space->current_iteration == game_space->max_iterations)
+            print_game_state(game_space);
+    }
+
+    printf("\n\nGame of Life ended!\n");
 }

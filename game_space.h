@@ -40,4 +40,6 @@ void print_game_state(game_space_t *game_space);
 
 void free_game_space(game_space_t *game_space);
 
+void run_game_of_life(game_space_t *game_space, unsigned int snapshot_freq);
+
 #endif //GAME_OF_LIFE_GAME_SPACE_H
