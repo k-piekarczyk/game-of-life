@@ -22,7 +22,10 @@ int main() {
         change_cell_state(game_space, 21, 20);
 
     game_space->current_iteration++;
-    print_game_state(game_space);
+
+    game_space_t *new_space = copy_game_space(game_space);
+
+    print_game_state(new_space);
 
     free(game_space->plane);
     free(game_space);

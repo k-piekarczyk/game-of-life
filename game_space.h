@@ -32,7 +32,12 @@ void change_cell_state(game_space_t *game_space, unsigned int x, unsigned int y)
 
 unsigned char check_cell_state(game_space_t *game_space, unsigned int x, unsigned int y);
 
+game_space_t *copy_game_space(game_space_t *game_space);
+
+void run_iteration(game_space_t *game_space);
 
 void print_game_state(game_space_t *game_space);
+
+void free_game_space(game_space_t *game_space);
 
 #endif //GAME_OF_LIFE_GAME_SPACE_H
