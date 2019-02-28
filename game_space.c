@@ -3,7 +3,17 @@
 //
 
 #include <stdio.h>
+#include <png.h>
 #include "game_space.h"
+
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
+/* DIVIDEND/DIVIDER is the posibility of cell to be alive in randomiser */
+#define LIVE_DIVIDEND 1
+#define LIVE_DIVIDER 3
+
+#define MOORES_NEIGHBOURHOOD
 
 game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, unsigned int iterations) {
     game_space_t *new_space = malloc(sizeof(game_space_t));
@@ -24,6 +34,16 @@ game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, un
     }
 
     return new_space;
+}
+
+void randomise_game_space(game_space_t *game_space) {
+    for (int i = 0; i < game_space->x_dim; i++) {
+        for (int j = 0; j < game_space->y_dim; j++) {
+            if ((LIVE_DIVIDEND * rand()) % LIVE_DIVIDER == 0) {
+                game_space->plane[i][j] = ALIVE;
+            }
+        }
+    }
 }
 
 void __plane_dimension_guard(game_space_t *game_space, unsigned int x, unsigned int y) {
@@ -47,6 +67,14 @@ unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, uns
 
     if (y != 0 && game_space->plane[x][y - 1] == ALIVE) neigh++;
     if (y != game_space->y_dim - 1 && game_space->plane[x][y + 1] == ALIVE) neigh++;
+
+#ifdef MOORES_NEIGHBOURHOOD
+    if (x != 0 && y != 0 && game_space->plane[x - 1][y - 1] == ALIVE) neigh++;
+    if (x != 0 && y != game_space->y_dim - 1 && game_space->plane[x - 1][y + 1] == ALIVE) neigh++;
+
+    if (x != game_space->x_dim - 1 && y != 0 && game_space->plane[x + 1][y - 1] == ALIVE) neigh++;
+    if (x != game_space->x_dim - 1 && y != game_space->y_dim - 1 && game_space->plane[x + 1][y + 1] == ALIVE) neigh++;
+#endif
 
     return neigh;
 }
@@ -151,14 +179,22 @@ void free_game_space(game_space_t *game_space) {
 }
 
 void run_game_of_life(game_space_t *game_space, unsigned int snapshot_freq) {
-    printf("Begining Game of Life: %d iterations, snapshot every %d iterations.\n\n", game_space->max_iterations, snapshot_freq);
+    printf("Begining Game of Life: " ANSI_COLOR_GREEN "%d" ANSI_COLOR_RESET " iterations, snapshot every " ANSI_COLOR_GREEN "%d" ANSI_COLOR_RESET " iterations.\nNeighborhood: ", game_space->max_iterations,
+           snapshot_freq);
+
+#ifdef MOORES_NEIGHBOURHOOD
+    printf(ANSI_COLOR_GREEN "Moore's\n\n" ANSI_COLOR_RESET);
+#else
+    printf(ANSI_COLOR_GREEN "Von Neumann's\n\n" ANSI_COLOR_RESET);
+#endif
 
     print_game_state(game_space);
 
-    while(game_space->current_iteration < game_space->max_iterations) {
+    while (game_space->current_iteration < game_space->max_iterations) {
         run_iteration(game_space);
 
-        if (game_space->current_iteration % snapshot_freq == 0 || game_space->current_iteration == game_space->max_iterations)
+        if (game_space->current_iteration % snapshot_freq == 0 ||
+            game_space->current_iteration == game_space->max_iterations)
             print_game_state(game_space);
     }
 
