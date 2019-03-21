@@ -14,4 +14,4 @@ To fully clone with submodules, use:
 ### Libraries:
  _imported as submodules_
 * [gifdec](https://github.com/lecram/gifdec)
-* [libpng](https://github.com/glennrp/libpng)
+* [lodepng](https://github.com/lvandeve/lodepng)

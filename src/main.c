@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "../libs/gifdec/gifdec.h"
+#include "../libs/lodepng/lodepng.h"
 
 #include "game_space_management.h"
 #include "game_space_structures.h"

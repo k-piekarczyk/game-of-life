@@ -7,8 +7,13 @@
 
 #include "game_functions.h"
 
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
+#if !defined __WIN32 && __WIN64
+    #define ANSI_COLOR_GREEN   "\x1b[32m"
+    #define ANSI_COLOR_RESET   "\x1b[0m"
+#else
+    #define ANSI_COLOR_GREEN   ""
+    #define ANSI_COLOR_RESET   ""
+#endif
 
 #define MOORES_NEIGHBOURHOOD
 
