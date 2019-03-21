@@ -1,5 +1,5 @@
 //
-//  Created by Krzysztof Piekarczyk on 2019-03-21.
+// Created by Krzysztof Piekarczyk on 2019-03-21.
 //
 
 #ifndef GAME_OF_LIFE_GAME_FUNCTIONS_H
