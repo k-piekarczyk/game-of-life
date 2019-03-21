@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "../libs/gifdec/gifdec.h"
+
 #include "game_space_management.h"
 #include "game_space_structures.h"
 #include "game_functions.h"

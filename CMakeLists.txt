@@ -8,4 +8,6 @@ add_executable(
         src/main.c
         src/game_space_management.c
         src/game_functions.c
+        libs/libpng/png.c
+        libs/gifdec/gifdec.c
 )

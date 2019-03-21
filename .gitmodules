@@ -1,6 +1,3 @@
 [submodule "libs/gifdec"]
 	path = libs/gifdec
 	url = git@github.com:lecram/gifdec.git
-[submodule "libs/libpng"]
-	path = libs/libpng
-	url = git@github.com:glennrp/libpng.git
