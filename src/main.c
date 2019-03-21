@@ -3,6 +3,8 @@
 #include <time.h>
 
 #include "game_space_management.h"
+#include "game_space_structures.h"
+#include "game_functions.h"
 
 #define X_LEN 30
 #define Y_LEN 10

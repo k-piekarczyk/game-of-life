@@ -17,24 +17,12 @@ void randomise_game_space(game_space_t *game_space);
 
 void __plane_dimension_guard(game_space_t *game_space, unsigned int x, unsigned int y);
 
-unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, unsigned int y);
-
-bool_t does_cell_die(game_space_t *game_space, unsigned int x, unsigned int y);
-
-bool_t does_cell_revive(game_space_t *game_space, unsigned int x, unsigned int y);
-
 void change_cell_state(game_space_t *game_space, unsigned int x, unsigned int y);
 
 unsigned char check_cell_state(game_space_t *game_space, unsigned int x, unsigned int y);
 
 game_space_t *copy_game_space(game_space_t *game_space);
 
-void run_iteration(game_space_t *game_space);
-
-void print_game_state(game_space_t *game_space);
-
 void free_game_space(game_space_t *game_space);
-
-void run_game_of_life(game_space_t *game_space, unsigned int snapshot_freq);
 
 #endif //GAME_OF_LIFE_GAME_SPACE_H
