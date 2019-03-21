@@ -8,16 +8,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-enum cell_state {DEAD=45, ALIVE=35};
-typedef enum bool_e {FALSE, TRUE} bool_t;
+#include "game_space_structures.h"
 
-typedef struct game_space_s {
-    unsigned int x_dim;
-    unsigned int y_dim;
-    unsigned int current_iteration;
-    unsigned int max_iterations;
-    unsigned char **plane;
-} game_space_t;
 
 game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, unsigned int iterations);
 

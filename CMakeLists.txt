@@ -3,4 +3,4 @@ project(game_of_life C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(game_of_life main.c game_space.c game_space.h)
+add_executable(game_of_life src/main.c src/game_space_management.c src/game_space_structures.h)

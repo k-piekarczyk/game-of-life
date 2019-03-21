@@ -3,7 +3,7 @@
 //
 
 #include <stdio.h>
-#include "game_space.h"
+#include "game_space_management.h"
 
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RESET   "\x1b[0m"

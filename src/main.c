@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "game_space.h"
+#include "game_space_management.h"
 
 #define X_LEN 30
 #define Y_LEN 10
