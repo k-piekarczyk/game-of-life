@@ -3,7 +3,6 @@
 //
 
 #include <stdio.h>
-#include <png.h>
 #include "game_space.h"
 
 #define ANSI_COLOR_GREEN   "\x1b[32m"
