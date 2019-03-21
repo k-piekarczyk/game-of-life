@@ -6,9 +6,12 @@ This project contains [submodules](https://git-scm.com/book/en/v2/Git-Tools-Subm
 To fully checkout, clone using this:
 `git clone --recurse-submodules https://github.com/chaconinc/MainProject`
 
+building:
+* [CMake](https://cmake.org/)
+
 dependencies:
-* gifdec
-* libpng
+* [gifdec](https://github.com/lecram/gifdec)
+* [libpng]()
     - [MacOS](http://macappstore.org/libpng/)
     - [Linux](https://geeksww.com/tutorials/libraries/libpng/installation/installing_libpng_on_ubuntu_linux.php)
     - [Windows](http://gnuwin32.sourceforge.net/packages/libpng.htm)
