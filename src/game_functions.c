@@ -7,13 +7,18 @@
 
 #include "game_functions.h"
 
-#if !defined __WIN32 && __WIN64
-    #define ANSI_COLOR_GREEN   "\x1b[32m"
-    #define ANSI_COLOR_RESET   "\x1b[0m"
+#ifdef __WIN32
+#define ANSI_COLOR_GREEN   ""
+#define ANSI_COLOR_RESET   ""
+#elif defined __WIN64
+#define ANSI_COLOR_GREEN   ""
+#define ANSI_COLOR_RESET   ""
 #else
-    #define ANSI_COLOR_GREEN   ""
-    #define ANSI_COLOR_RESET   ""
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
 #endif
+
+#define GREEN_STR(string) ANSI_COLOR_GREEN string ANSI_COLOR_RESET
 
 #define MOORES_NEIGHBOURHOOD
 
@@ -95,13 +100,17 @@ void print_game_state(game_space_t *game_space) {
 
 
 void run_game_of_life(game_space_t *game_space, unsigned int snapshot_freq) {
-    printf("Begining Game of Life: " ANSI_COLOR_GREEN "%d" ANSI_COLOR_RESET " iterations, snapshot every " ANSI_COLOR_GREEN "%d" ANSI_COLOR_RESET " iterations.\nNeighborhood: ", game_space->max_iterations,
+    printf("Begining Game of Life: "
+           GREEN_STR("%d")
+           " iterations, snapshot every "
+           GREEN_STR("%d")
+           " iterations.\nNeighborhood: ", game_space->max_iterations,
            snapshot_freq);
 
 #ifdef MOORES_NEIGHBOURHOOD
-    printf(ANSI_COLOR_GREEN "Moore's\n\n" ANSI_COLOR_RESET);
+    printf(GREEN_STR("Moore's\n\n"));
 #else
-    printf(ANSI_COLOR_GREEN "Von Neumann's\n\n" ANSI_COLOR_RESET);
+    printf(GREEN_STR("Von Neumann's\n\n"));
 #endif
 
     print_game_state(game_space);
