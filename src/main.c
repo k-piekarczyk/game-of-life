@@ -6,8 +6,8 @@
 #include "game_space_structures.h"
 #include "game_functions.h"
 
-#define X_LEN 300
-#define Y_LEN 300
+#define X_LEN 400
+#define Y_LEN 400
 #define ITER 500
 
 int main() {

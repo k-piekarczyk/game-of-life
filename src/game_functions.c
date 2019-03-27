@@ -132,10 +132,16 @@ void run_game_of_life__create_a_gif(game_space_t *game_space) {
 
     render_gif_frame(game_space, gif->frame);
 
+    printf("%d of %d iterations processed.", game_space->current_iteration, game_space->max_iterations);
+    fflush(stdout);
+
     for (int i = 0; i < game_space->max_iterations; i++) {
         run_iteration(game_space);
         render_gif_frame(game_space, gif->frame);
         ge_add_frame(gif, 10);
+        printf("\r" GREEN_STR("%d") " of " GREEN_STR("%d") " iterations processed.", game_space->current_iteration,
+               game_space->max_iterations);
+        fflush(stdout);
     }
 
     ge_close_gif(gif);

@@ -10,9 +10,9 @@
 void print_game_state(game_space_t *game_space) {
     printf("Iteration %d of %d:\n", game_space->current_iteration, game_space->max_iterations);
 
-    for (int i = 0; i < game_space->y_dim; i++) {
-        for (int j = 0; j < game_space->x_dim; j++) {
-            printf("%c", game_space->plane[j][i]);
+    for (int y = 0; y < game_space->y_dim; y++) {
+        for (int x = 0; x < game_space->x_dim; x++) {
+            printf("%c", game_space->plane[x][y]);
         }
         printf("\n");
     }
