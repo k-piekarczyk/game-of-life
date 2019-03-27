@@ -10,4 +10,4 @@ add_executable(
         src/game_functions.c
         libs/gifdec/gifdec.c
         libs/lodepng/lodepng.c
-)
+        src/game_space_display.c)

@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "game_functions.h"
+#include "game_space_display.h"
 
 #ifdef __WIN32
 #define ANSI_COLOR_GREEN   ""
@@ -87,19 +88,8 @@ void run_iteration(game_space_t *game_space) {
     game_space->current_iteration++;
 }
 
-void print_game_state(game_space_t *game_space) {
-    printf("Iteration %d of %d:\n", game_space->current_iteration, game_space->max_iterations);
 
-    for (int i = 0; i < game_space->y_dim; i++) {
-        for (int j = 0; j < game_space->x_dim; j++) {
-            printf("%c", game_space->plane[j][i]);
-        }
-        printf("\n");
-    }
-}
-
-
-void run_game_of_life(game_space_t *game_space, unsigned int snapshot_freq) {
+void run_game_of_life__display_to_console(game_space_t *game_space, unsigned int snapshot_freq) {
     printf("Begining Game of Life: "
            GREEN_STR("%d")
            " iterations, snapshot every "

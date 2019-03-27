@@ -20,7 +20,7 @@ int main() {
 
     randomise_game_space(game_space);
 
-    run_game_of_life(game_space, 1);
+    run_game_of_life__display_to_console(game_space, 1);
 
     free_game_space(game_space);
 
