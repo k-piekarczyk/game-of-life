@@ -2,16 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "../libs/gifdec/gifdec.h"
-#include "../libs/lodepng/lodepng.h"
-
 #include "game_space_management.h"
 #include "game_space_structures.h"
 #include "game_functions.h"
 
-#define X_LEN 30
-#define Y_LEN 10
-#define ITER 10
+#define X_LEN 300
+#define Y_LEN 300
+#define ITER 500
 
 int main() {
     srand(time(NULL));
@@ -20,7 +17,8 @@ int main() {
 
     randomise_game_space(game_space);
 
-    run_game_of_life__display_to_console(game_space, 1);
+//    run_game_of_life__display_to_console(game_space, 1);
+    run_game_of_life__create_a_gif(game_space);
 
     free_game_space(game_space);
 

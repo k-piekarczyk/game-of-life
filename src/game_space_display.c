@@ -17,3 +17,11 @@ void print_game_state(game_space_t *game_space) {
         printf("\n");
     }
 }
+
+void render_gif_frame(game_space_t *game_space, uint8_t *frame) {
+    for (int y=0; y < game_space->y_dim; y++)
+        for (int x=0; x < game_space->x_dim; x++) {
+            if (game_space->plane[x][y] == ALIVE) frame[x + y*game_space->x_dim] = 1;
+            else frame[x + y*game_space->x_dim] = 0;
+        }
+}

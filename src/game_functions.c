@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../libs/gifenc/gifenc.h"
+
 #include "game_functions.h"
 #include "game_space_display.h"
 
@@ -113,5 +115,29 @@ void run_game_of_life__display_to_console(game_space_t *game_space, unsigned int
             print_game_state(game_space);
     }
 
+    printf("\n\nGame of Life ended!\n");
+}
+
+void run_game_of_life__create_a_gif(game_space_t *game_space) {
+    printf("Begining Game of Life: " GREEN_STR("%d") "\nNeighborhood: ", game_space->max_iterations);
+
+#ifdef MOORES_NEIGHBOURHOOD
+    printf(GREEN_STR("Moore's\n\n"));
+#else
+    printf(GREEN_STR("Von Neumann's\n\n"));
+#endif
+
+    ge_GIF *gif = ge_new_gif("game_of_life.gif", game_space->x_dim, game_space->y_dim,
+                             (uint8_t[]) {0xFF, 0xFF, 0xFF, /* 0 -> white */ 0x00, 0x00, 0x00  /* 1 -> black */}, 1, 0);
+
+    render_gif_frame(game_space, gif->frame);
+
+    for (int i = 0; i < game_space->max_iterations; i++) {
+        run_iteration(game_space);
+        render_gif_frame(game_space, gif->frame);
+        ge_add_frame(gif, 10);
+    }
+
+    ge_close_gif(gif);
     printf("\n\nGame of Life ended!\n");
 }
