@@ -127,8 +127,12 @@ void run_game_of_life__create_a_gif(game_space_t *game_space) {
     printf(GREEN_STR("Von Neumann's\n\n"));
 #endif
 
-    ge_GIF *gif = ge_new_gif("game_of_life.gif", game_space->x_dim, game_space->y_dim,
-                             (uint8_t[]) {0xFF, 0xFF, 0xFF, /* 0 -> white */ 0x00, 0x00, 0x00  /* 1 -> black */}, 1, 0);
+    ge_GIF *gif = ge_new_gif("game_of_life.gif", game_space->x_dim, game_space->y_dim + 5,
+                             (uint8_t[]) {0xFF, 0xFF, 0xFF, /* 0 -> white */
+                                          0x00, 0x00, 0x00, /* 1 -> black */
+                                          0xFF, 0x00, 0x00, /* 2 -> red */
+                                          0x00, 0x00, 0xFF, /* 3 -> blue */
+                                          }, 2, 0);
 
     render_gif_frame(game_space, gif->frame);
 
