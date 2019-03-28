@@ -6,8 +6,8 @@
 #include "game_space_structures.h"
 #include "game_functions.h"
 
-#define X_LEN 400
-#define Y_LEN 400
+#define X_LEN 1000
+#define Y_LEN 500
 #define ITER 500
 
 int main() {
@@ -18,7 +18,8 @@ int main() {
     randomise_game_space(game_space);
 
 //    run_game_of_life__display_to_console(game_space, 1);
-    run_game_of_life__create_a_gif(game_space);
+//    run_game_of_life__create_a_gif(game_space, "game_of_life.gif", 25);
+    run_game_of_life__create_a_gif__timebar(game_space, "game_of_life.gif", 61);
 
     free_game_space(game_space);
 

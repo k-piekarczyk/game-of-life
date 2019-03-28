@@ -5,8 +5,18 @@
 #include <stdio.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "game_space_display.h"
+
+#define TIMEBAR_HEIGHT 5
+
+uint8_t color_palette[] = {
+        0xFF, 0xFF, 0xFF, /* 0 -> white */
+        0x00, 0x00, 0x00, /* 1 -> black */
+        0xFF, 0x00, 0x00, /* 2 -> red */
+        0x00, 0x00, 0xFF, /* 3 -> blue */
+};
 
 void print_game_state(game_space_t *game_space) {
     printf("Iteration %d of %d:\n", game_space->current_iteration, game_space->max_iterations);
@@ -19,21 +29,47 @@ void print_game_state(game_space_t *game_space) {
     }
 }
 
-void render_gif_frame(game_space_t *game_space, uint8_t *frame) {
+ge_GIF *create_gif(game_space_t *game_space, char *name) {
+    return ge_new_gif(name, game_space->x_dim, game_space->y_dim, color_palette, 2, 0);
+}
+
+ge_GIF *create_gif__timebar(game_space_t *game_space, char *name) {
+    return ge_new_gif(name, game_space->x_dim, game_space->y_dim + TIMEBAR_HEIGHT, color_palette, 2, 0);
+}
+
+void render_gif_frame(game_space_t *game_space, ge_GIF *gif) {
     for (int y = 0; y < game_space->y_dim; y++) {
         for (int x = 0; x < game_space->x_dim; x++) {
-            if (game_space->plane[x][y] == ALIVE) frame[x + y * game_space->x_dim] = 1;
-            else frame[x + y * game_space->x_dim] = 0;
+            if (game_space->plane[x][y] == ALIVE) gif->frame[x + y * game_space->x_dim] = 1;
+            else gif->frame[x + y * game_space->x_dim] = 0;
+        }
+    }
+}
+
+void render_gif_frame__timebar(game_space_t *game_space, ge_GIF *gif) {
+    if (gif->h < game_space->y_dim + TIMEBAR_HEIGHT) {
+        printf("\n\nGIF dimensions too small to fit a timebar!");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int y = 0; y < game_space->y_dim; y++) {
+        for (int x = 0; x < game_space->x_dim; x++) {
+            if (game_space->plane[x][y] == ALIVE) gif->frame[x + y * game_space->x_dim] = 1;
+            else gif->frame[x + y * game_space->x_dim] = 0;
         }
     }
 
     double ratio = (double) game_space->current_iteration / game_space->max_iterations;
     int ready_len = (int) floor(ratio * game_space->x_dim);
 
-    for (int j = 0; j < 5; j++) {
+    for (int j = 0; j < TIMEBAR_HEIGHT; j++) {
         for (int i = 0; i < game_space->x_dim; i++) {
-            if (i < ready_len) frame[i + (game_space->x_dim) + ((game_space->y_dim - 1) * game_space->x_dim) + (j * game_space->x_dim)] = 2;
-            else frame[i + (game_space->x_dim) + ((game_space->y_dim - 1) * game_space->x_dim) + (j * game_space->x_dim)] = 3;
+            if (i < ready_len)
+                gif->frame[i + (game_space->x_dim) + ((game_space->y_dim - 1) * game_space->x_dim) +
+                           (j * game_space->x_dim)] = 2;
+            else
+                gif->frame[i + (game_space->x_dim) + ((game_space->y_dim - 1) * game_space->x_dim) +
+                           (j * game_space->x_dim)] = 3;
         }
     }
 }

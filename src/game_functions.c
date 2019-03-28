@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "../libs/gifenc/gifenc.h"
 
@@ -118,7 +119,48 @@ void run_game_of_life__display_to_console(game_space_t *game_space, unsigned int
     printf("\n\nGame of Life ended!\n");
 }
 
-void run_game_of_life__create_a_gif(game_space_t *game_space) {
+void run_game_of_life__create_a_gif(game_space_t *game_space, char *name, int iter_per_sec) {
+    if(iter_per_sec > 60) {
+        iter_per_sec = 60;
+        printf("WARNING: " GREEN_STR("Iterations per second capped at 60.\n"));
+    }
+
+    int frame_delay = (int) ceil((double) 100 / iter_per_sec);
+    printf("Begining Game of Life: " GREEN_STR("%d") " iterations.\nNeighborhood: ", game_space->max_iterations);
+
+#ifdef MOORES_NEIGHBOURHOOD
+    printf(GREEN_STR("Moore's\n\n"));
+#else
+    printf(GREEN_STR("Von Neumann's\n\n"));
+#endif
+
+    ge_GIF *gif = create_gif(game_space, name);
+
+    render_gif_frame(game_space, gif);
+
+    printf("%d of %d iterations processed.", game_space->current_iteration, game_space->max_iterations);
+    fflush(stdout);
+
+    for (int i = 0; i < game_space->max_iterations; i++) {
+        run_iteration(game_space);
+        render_gif_frame(game_space, gif);
+        ge_add_frame(gif, frame_delay);
+        printf("\r" GREEN_STR("%d") " of " GREEN_STR("%d") " iterations processed.", game_space->current_iteration,
+               game_space->max_iterations);
+        fflush(stdout);
+    }
+
+    ge_close_gif(gif);
+    printf("\n\nGame of Life ended!\n");
+}
+
+void run_game_of_life__create_a_gif__timebar(game_space_t *game_space, char *name, int iter_per_sec) {
+    if(iter_per_sec > 60) {
+        iter_per_sec = 60;
+        printf("WARNING: " GREEN_STR("Iterations per second capped at 60.\n"));
+    }
+    int frame_delay = (int) ceil((double) 100 / iter_per_sec);
+
     printf("Begining Game of Life: " GREEN_STR("%d") "\nNeighborhood: ", game_space->max_iterations);
 
 #ifdef MOORES_NEIGHBOURHOOD
@@ -127,22 +169,17 @@ void run_game_of_life__create_a_gif(game_space_t *game_space) {
     printf(GREEN_STR("Von Neumann's\n\n"));
 #endif
 
-    ge_GIF *gif = ge_new_gif("game_of_life.gif", game_space->x_dim, game_space->y_dim + 5,
-                             (uint8_t[]) {0xFF, 0xFF, 0xFF, /* 0 -> white */
-                                          0x00, 0x00, 0x00, /* 1 -> black */
-                                          0xFF, 0x00, 0x00, /* 2 -> red */
-                                          0x00, 0x00, 0xFF, /* 3 -> blue */
-                                          }, 2, 0);
+    ge_GIF *gif = create_gif__timebar(game_space, name);
 
-    render_gif_frame(game_space, gif->frame);
+    render_gif_frame(game_space, gif);
 
     printf("%d of %d iterations processed.", game_space->current_iteration, game_space->max_iterations);
     fflush(stdout);
 
     for (int i = 0; i < game_space->max_iterations; i++) {
         run_iteration(game_space);
-        render_gif_frame(game_space, gif->frame);
-        ge_add_frame(gif, 10);
+        render_gif_frame__timebar(game_space, gif);
+        ge_add_frame(gif, frame_delay);
         printf("\r" GREEN_STR("%d") " of " GREEN_STR("%d") " iterations processed.", game_space->current_iteration,
                game_space->max_iterations);
         fflush(stdout);
