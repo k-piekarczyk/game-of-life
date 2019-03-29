@@ -21,5 +21,7 @@ void run_game_of_life__display_to_console(game_space_t *game_space, unsigned int
 void run_game_of_life__create_a_gif(game_space_t *game_space, char *name, int iter_per_sec);
 void run_game_of_life__create_a_gif__timebar(game_space_t *game_space, char *name, int iter_per_sec);
 
+void run_game_of_life__create_pngs(game_space_t *game_space, unsigned int snapshot_freq);
+
 
 #endif //GAME_OF_LIFE_GAME_FUNCTIONS_H

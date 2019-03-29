@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "game_space_management.h"
+#include "game_space_display.h"
 #include "game_space_structures.h"
 #include "game_functions.h"
 
@@ -19,9 +20,11 @@ int main() {
 
 //    run_game_of_life__display_to_console(game_space, 1);
 //    run_game_of_life__create_a_gif(game_space, "game_of_life.gif", 25);
-    run_game_of_life__create_a_gif__timebar(game_space, "game_of_life.gif", 61);
+//    run_game_of_life__create_a_gif__timebar(game_space, "game_of_life.gif", 61);
+    run_game_of_life__create_pngs(game_space, 50);
 
     free_game_space(game_space);
+
 
     return 0;
 }

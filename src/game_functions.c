@@ -188,3 +188,37 @@ void run_game_of_life__create_a_gif__timebar(game_space_t *game_space, char *nam
     ge_close_gif(gif);
     printf("\n\nGame of Life ended!\n");
 }
+
+void run_game_of_life__create_pngs(game_space_t *game_space, unsigned int snapshot_freq) {
+    printf("Begining Game of Life: "
+           GREEN_STR("%d")
+           " iterations, snapshot every "
+           GREEN_STR("%d")
+           " iterations.\nNeighborhood: ", game_space->max_iterations,
+           snapshot_freq);
+
+#ifdef MOORES_NEIGHBOURHOOD
+    printf(GREEN_STR("Moore's\n\n"));
+#else
+    printf(GREEN_STR("Von Neumann's\n\n"));
+#endif
+
+    render_png(game_space);
+
+    printf("%d of %d iterations processed.", game_space->current_iteration, game_space->max_iterations);
+    fflush(stdout);
+
+    while (game_space->current_iteration < game_space->max_iterations) {
+        run_iteration(game_space);
+
+        if (game_space->current_iteration % snapshot_freq == 0 ||
+            game_space->current_iteration == game_space->max_iterations)
+            render_png(game_space);
+
+        printf("\r" GREEN_STR("%d") " of " GREEN_STR("%d") " iterations processed.", game_space->current_iteration,
+               game_space->max_iterations);
+        fflush(stdout);
+    }
+
+    printf("\n\nGame of Life ended!\n");
+}
