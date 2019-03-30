@@ -145,11 +145,8 @@ game_space_t *create_game_space(char *fileName) {
                 }
             }
             if ((strstr(token, "Iterations")) != NULL) {
-                printf("%s", token);
                 token = strtok(NULL, "<,>");
-                printf("%s", token);
                 if (token != NULL) {
-                    printf("%s", token);
                     iterations = strtol(token, NULL, 10);
                 }
             }
