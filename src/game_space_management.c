@@ -12,13 +12,12 @@
 #define LIVE_DIVIDER 3
 
 
-game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, unsigned int iterations) {
+game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim) {
     game_space_t *new_space = malloc(sizeof(game_space_t));
 
     new_space->x_dim = x_dim;
     new_space->y_dim = y_dim;
     new_space->current_iteration = 0;
-    new_space->max_iterations = iterations;
 
     new_space->plane = malloc(sizeof(unsigned char *) * x_dim);
 
@@ -31,6 +30,10 @@ game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, un
     }
 
     return new_space;
+}
+
+void set_max_iterations(game_space_t *game_space, unsigned int iter) {
+    game_space->max_iterations = iter;
 }
 
 void randomise_game_space(game_space_t *game_space) {

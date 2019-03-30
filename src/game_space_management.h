@@ -11,7 +11,9 @@
 #include "game_space_structures.h"
 
 
-game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, unsigned int iterations);
+game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim);
+
+void set_max_iterations(game_space_t *game_space, unsigned int iter);
 
 void randomise_game_space(game_space_t *game_space);
 
