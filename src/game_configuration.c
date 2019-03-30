@@ -63,7 +63,7 @@ parsed_line_t *parse_line(const char *src) {
     return parsed_line;
 }
 
-game_space_t *run_game_of_life__file(char *file_name) {
+void run_game_of_life__file(char *file_name) {
     int width = 0, height = 0, max_iter = 0, freq = 0, fps = 0;
     char *png = NULL;
     bool_t config_done = FALSE, config_alive = FALSE;
