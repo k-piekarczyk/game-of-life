@@ -11,6 +11,7 @@
 #define LIVE_DIVIDEND 1
 #define LIVE_DIVIDER 3
 #define LINE_BUFFER 256
+#define MAX_SELECTED 120
 
 
 game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, unsigned int iterations) {
@@ -44,7 +45,7 @@ void randomise_game_space(game_space_t *game_space) {
     }
 }
 
-void fill_game_space(game_space_t *game_space, int *tabAlive[100], int numAlive) {
+void fill_game_space(game_space_t *game_space, int *tabAlive[MAX_SELECTED], int numAlive) {
     for (int i = 0; i < numAlive; i++) {
         if (tabAlive[0][i] < game_space->x_dim && tabAlive[1][i] < game_space->y_dim) {
             game_space->plane[(tabAlive[0][i])][(tabAlive[1][i])] = ALIVE;
@@ -111,11 +112,11 @@ void free_game_space(game_space_t *game_space) {
 
 
 game_space_t *create_game_space(char *fileName) {
-    int y = 100, x = 100, iterations = 10, random = 1;
-    int *tabAlive[100];
-        for(int i =0; i < 100; i++){
-            tabAlive[i] = (int *)malloc(2 * sizeof(int));
-        }
+    int y_len = 100, x_len = 100, iterations = 10, random = 1;
+    int *tabAlive[MAX_SELECTED];
+    for(int i =0; i < MAX_SELECTED; i++){
+        tabAlive[i] = (int *)malloc(2 * sizeof(int));
+    }
     int numAlive = 0;
     char *token;
     FILE *fp;
@@ -129,16 +130,16 @@ game_space_t *create_game_space(char *fileName) {
             if ((strstr(token, "Dimensions")) != NULL) {
                 token = strtok(NULL, "<,>");
                 if (token != NULL) {
-                    x = strtol(token, NULL, 10);
-                    if (x == 0) {
+                    x_len = strtol(token, NULL, 10);
+                    if (x_len == 0) {
                         printf("Dimension x error");
                         exit(EXIT_FAILURE);
                     }
                 }
                 token = strtok(NULL, ",");
                 if (token != NULL) {
-                    y = strtol(token, NULL, 10);
-                    if (y == 0) {
+                    y_len = strtol(token, NULL, 10);
+                    if (y_len == 0) {
                         printf("Dimension y error");
                         exit(EXIT_FAILURE);
                     }
@@ -166,7 +167,7 @@ game_space_t *create_game_space(char *fileName) {
 
         }
     }
-    game_space_t *game_space = create_blank_game_space(x, y, iterations);
+    game_space_t *game_space = create_blank_game_space(x_len, y_len, iterations);
     if (random == 1) {
         randomise_game_space(game_space);
     } else {

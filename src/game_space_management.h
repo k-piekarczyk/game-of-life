@@ -17,7 +17,7 @@ game_space_t *create_game_space(char argv[1]);
 
 void randomise_game_space(game_space_t *game_space);
 
-void fill_game_space(game_space_t *game_space, int *tabAlive[100], int numAlive);
+void fill_game_space(game_space_t *game_space, int *tabAlive[], int numAlive);
 
 void __plane_dimension_guard(game_space_t *game_space, unsigned int x, unsigned int y);
 
