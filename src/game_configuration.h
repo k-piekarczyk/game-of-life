@@ -1,0 +1,8 @@
+//
+// Created by Krzysztof Piekarczyk on 2019-03-30.
+//
+
+#ifndef GAME_OF_LIFE_GAME_CONFIGURATION_H
+#define GAME_OF_LIFE_GAME_CONFIGURATION_H
+
+#endif //GAME_OF_LIFE_GAME_CONFIGURATION_H
