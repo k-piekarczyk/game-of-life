@@ -25,7 +25,10 @@ game_space_t *create_game_of_life__png(char *file_name) {
     unsigned width, height;
 
     error = lodepng_decode32_file(&image, &width, &height, file_name);
-    if (error) printf("error %u: %s\n", error, lodepng_error_text(error));
+    if (error) {
+        printf("No file with name: %s!\n", file_name);
+        exit(EXIT_FAILURE);
+    }
 
     game_space_t *new_space = create_blank_game_space(width, height);
 
@@ -144,7 +147,7 @@ void run_game_of_life__file(char *file_name) {
     if (freq > 0) {
         run_game_of_life__create_pngs(game_space, freq);
     } else if (fps > 0) {
-        run_game_of_life__create_a_gif__timebar(game_space, "gol_output.gif", fps);
+        run_game_of_life__create_a_gif__timebar(game_space, "out/gol_output.gif", fps);
     }
 
     free_game_space(game_space);

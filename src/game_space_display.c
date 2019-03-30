@@ -81,7 +81,10 @@ void __encodePNG(const char *filename, const unsigned char *image, unsigned widt
     unsigned error = lodepng_encode32_file(filename, image, width, height);
 
     /*if there's an error, display it*/
-    if (error) printf("error %u: %s\n", error, lodepng_error_text(error));
+    if (error) {
+        printf("\n\nAn error occured while writing file: %s!\n", filename);
+        exit(EXIT_FAILURE);
+    }
 }
 
 void render_png(game_space_t *game_space) {
