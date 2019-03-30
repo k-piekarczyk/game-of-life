@@ -10,10 +10,6 @@
 /* DIVIDEND/DIVIDER is the posibility of cell to be alive in randomiser */
 #define LIVE_DIVIDEND 1
 #define LIVE_DIVIDER 3
-#define LINE_BUFFER 256
-#define MAX_SELECTED 120
-#define X_SELECTED 0
-#define Y_SELECTED 1
 
 
 game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, unsigned int iterations) {
@@ -43,14 +39,6 @@ void randomise_game_space(game_space_t *game_space) {
             if ((LIVE_DIVIDEND * rand()) % LIVE_DIVIDER == 0) {
                 game_space->plane[i][j] = ALIVE;
             }
-        }
-    }
-}
-
-void fill_game_space(game_space_t *game_space, int *tabAlive[MAX_SELECTED], int numAlive) {
-    for (int i = 0; i < numAlive; i++) {
-        if (tabAlive[X_SELECTED][i] < game_space->x_dim && tabAlive[Y_SELECTED][i] < game_space->y_dim) {
-            game_space->plane[(tabAlive[X_SELECTED][i])][(tabAlive[Y_SELECTED][i])] = ALIVE;
         }
     }
 }
@@ -111,72 +99,3 @@ void free_game_space(game_space_t *game_space) {
     free(game_space->plane);
     free(game_space);
 }
-
-
-game_space_t *create_game_space(char *fileName) {
-    int y_len = 100, x_len = 100, iterations = 10, random = 1;
-    int *tabAlive[MAX_SELECTED];
-    for(int i =0; i < MAX_SELECTED; i++){
-        tabAlive[i] = (int *)malloc(2 * sizeof(int));
-    }
-    int numAlive = 0;
-    char *token;
-    FILE *fp;
-    fp = fopen(fileName, "r");
-    if (fp == NULL) {
-        printf("No file '%s'.\n", fileName);
-    } else {
-        char line[LINE_BUFFER];
-        while (fgets(line, sizeof line, fp) != NULL) {
-            token = strtok(line, "<,;>");
-            if ((strstr(token, "Dimensions")) != NULL) {
-                token = strtok(NULL, "<,>");
-                if (token != NULL) {
-                    x_len = strtol(token, NULL, 10);
-                    if (x_len == 0) {
-                        printf("Dimension x error");
-                        exit(EXIT_FAILURE);
-                    }
-                }
-                token = strtok(NULL, ",");
-                if (token != NULL) {
-                    y_len = strtol(token, NULL, 10);
-                    if (y_len == 0) {
-                        printf("Dimension y error");
-                        exit(EXIT_FAILURE);
-                    }
-                }
-            }
-            if ((strstr(token, "Iterations")) != NULL) {
-                token = strtok(NULL, "<,>");
-                if (token != NULL) {
-                    iterations = strtol(token, NULL, 10);
-                }
-            }
-            if ((strstr(token, "Alive")) != NULL) {
-                random = 0;
-                token = strtok(NULL, "<,;>");
-                while (token != NULL && numAlive < 100) {
-                    tabAlive[X_SELECTED][numAlive] = strtol(token, NULL, 10);
-                    token = strtok(NULL, ";,");
-                    if (token != NULL) {
-                        tabAlive[Y_SELECTED][numAlive] = strtol(token, NULL, 10);
-                    }
-                    token = strtok(NULL, ";,");
-                    numAlive++;
-                }
-            }
-
-        }
-    }
-    game_space_t *game_space = create_blank_game_space(x_len, y_len, iterations);
-    if (random == 1) {
-        randomise_game_space(game_space);
-    } else {
-        fill_game_space(game_space, tabAlive, numAlive);
-    }
-    return game_space;
-}
-
-
-
