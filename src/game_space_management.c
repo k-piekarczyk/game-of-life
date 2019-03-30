@@ -12,6 +12,8 @@
 #define LIVE_DIVIDER 3
 #define LINE_BUFFER 256
 #define MAX_SELECTED 120
+#define X_SELECTED 0
+#define Y_SELECTED 1
 
 
 game_space_t *create_blank_game_space(unsigned int x_dim, unsigned int y_dim, unsigned int iterations) {
@@ -47,8 +49,8 @@ void randomise_game_space(game_space_t *game_space) {
 
 void fill_game_space(game_space_t *game_space, int *tabAlive[MAX_SELECTED], int numAlive) {
     for (int i = 0; i < numAlive; i++) {
-        if (tabAlive[0][i] < game_space->x_dim && tabAlive[1][i] < game_space->y_dim) {
-            game_space->plane[(tabAlive[0][i])][(tabAlive[1][i])] = ALIVE;
+        if (tabAlive[X_SELECTED][i] < game_space->x_dim && tabAlive[Y_SELECTED][i] < game_space->y_dim) {
+            game_space->plane[(tabAlive[X_SELECTED][i])][(tabAlive[Y_SELECTED][i])] = ALIVE;
         }
     }
 }
@@ -155,10 +157,10 @@ game_space_t *create_game_space(char *fileName) {
                 random = 0;
                 token = strtok(NULL, "<,;>");
                 while (token != NULL && numAlive < 100) {
-                    tabAlive[0][numAlive] = strtol(token, NULL, 10);
+                    tabAlive[X_SELECTED][numAlive] = strtol(token, NULL, 10);
                     token = strtok(NULL, ";,");
                     if (token != NULL) {
-                        tabAlive[1][numAlive] = strtol(token, NULL, 10);
+                        tabAlive[Y_SELECTED][numAlive] = strtol(token, NULL, 10);
                     }
                     token = strtok(NULL, ";,");
                     numAlive++;
