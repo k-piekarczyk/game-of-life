@@ -3,6 +3,7 @@
 //
 
 #include <stdio.h>
+#include <time.h>
 
 #include "../libs/lodepng/lodepng.h"
 
@@ -132,7 +133,10 @@ game_space_t *run_game_of_life__file(char *file_name) {
             }
         }
 
-        if (config_alive == FALSE) randomise_game_space(game_space);
+        if (config_alive == FALSE) {
+            srand(time(NULL));
+            randomise_game_space(game_space);
+        }
     }
 
     set_max_iterations(game_space, max_iter);
