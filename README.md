@@ -15,3 +15,37 @@ To fully clone with submodules, use:
  _imported as submodules_
 * [gifenc](https://github.com/lecram/gifenc)
 * [lodepng](https://github.com/lvandeve/lodepng)
+
+## Usage
+
+    ./gol <config_file> 
+    
+Folder `out/` **must** exist for the program to work properly.
+
+## Config file formatting
+Configuration is based on `key>value` pairs.
+
+### Dimensions
+- `width` - width of the game space
+- `height` - height of the game space
+
+or 
+
+- `png` - route to a PNG file from which the game space dimensions will be derived
+
+### Cell state
+- `alive` - can be used multiple times, every row contains `x,y` of an alive cell
+
+or
+
+- `png` - if used, the fully black pixels of the png will be used as live cells
+
+### Output type
+- `freq` - frequency of png simulation snapshots eg: freq>50 means that a snapshot will be taken every 50 iterations
+
+or
+
+- `fps` - how many iterations per second should be in an output gif
+
+### Other
+- `max_iter` - number of iterations the simulation has to make
