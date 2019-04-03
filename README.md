@@ -1,7 +1,7 @@
 # game-of-life
 
 ### Documentation
-You can find the **polish** language documantation in the `docs` directory, written in [LATEX](https://www.latex-project.org/) syntax. To compile, run `make -B docs`.
+You can find the **polish** language documantation in the `docs` directory, written in [LATEX](https://www.latex-project.org/) syntax. To compile, run `make docs`.
 
 
 ## Warning!
@@ -25,8 +25,10 @@ To fully clone with submodules, use:
 Some parts of the code use macros as predefined configuration. Here's a list of them:
 * _MOORES_NEIGHBORHOOD_  `src/game_functions.c`
     * if defined, the simulation will use [Moore's neighborhood](https://en.wikipedia.org/wiki/Moore_neighborhood), otherwise [Von Neumann's neighborhood](https://en.wikipedia.org/wiki/Von_Neumann_neighborhood) will be used.
+
 * _TIMEBAR_HEIGHT_  `src/game_space_display.c`
     * __integer__, sets the height of the generated gifs timebar height
+
 * _LIVE_DIVIDEND_ and _LIVE_DIVIDER_  `src/game_space_management.c`
     * sets the probability of a cell being a __LIVE__ cell when randomly populating the game space [`P = dividend / divider`]
 

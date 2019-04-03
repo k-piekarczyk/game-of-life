@@ -37,8 +37,17 @@ main.o: src/main.c
 	./mdif.sh out
 	gcc -c src/main.c -o make-o/main.o
 
-docs:
-	pdflatex  -output-directory docs docs/specyfikacja_funkcjonalna.tex
-	pdflatex  -output-directory docs docs/specyfikacja_implementacyjna.tex
-	rm docs/*.aux
-	rm docs/*.log
+docs-fu: docs/specyfikacja_funkcjonalna.tex
+	pdflatex -halt-on-error -output-directory docs docs/specyfikacja_funkcjonalna.tex
+	@rm docs/*.aux
+	@rm docs/*.log
+	@echo "[docs-fu] done docs/specyfikacja_funkcjonalna.pdf, logs cleaned up"
+
+docs-im: docs/specyfikacja_implementacyjna.tex
+	pdflatex -halt-on-error  -output-directory docs docs/specyfikacja_implementacyjna.tex
+	@rm docs/*.aux
+	@rm docs/*.log
+	@echo "[docs-im] done docs/specyfikacja_implementacyjna.pdf, logs cleaned up"
+
+docs: docs-fu docs-im
+	@echo "done docs"

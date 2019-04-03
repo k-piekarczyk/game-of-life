@@ -7,4 +7,51 @@
 \begin{document}
 \maketitle
 
+
+\section{Informacje ogólne}
+By wywołać program, należy użyć: \textbf{\textit{./gol \textless plik\_konfiguracyjny\textgreater}}.
+Przykładowe pliki konfiguracyjne znajdują się w folderze \textbf{\textit{demo-conf}}.\\
+\\
+Przy poprawnym rozpoczęciu, program będzie na bierząco informował o postępach symulacji.
+
+
+\section{Opis plików nagłówkowych}
+Wszystkie pliki składające się na program znajdują się w dolderze \textbf{\textit{src}}.
+
+    \subsection{\textbf{\textit{game\_space\_structures.h}}}
+        Ten plik zawiera typy danych i struktury wykorzystywane przez symulację.
+
+        \begin{itemize}
+            \item \textit{enum \textbf{cell\_state}} [\textit{DEAD}=45, \textit{ALIVE}=35] - służy przedstawieniu stanu komórki
+            \item \textit{struct \textbf{game\_space\_s} -\textgreater typedef \textbf{game\_space\_t}} - służy przedstawieniu obecnego stanu symulacji jako kontener
+            \item \textit{enum \textbf{bool\_e} -\textgreater typedef \textbf{bool\_t}} - implementacja zmiennej boolowskiej
+        \end{itemize}
+
+
+    \subsection{\textbf{\textit{game\_space\_management.h}}}
+        Zależności: \textit{ \textbf{game\_space\_structures.h}}\\\\
+        Ten plik zawiera funkcje odpowiadające za manipulację stanem symulacji.
+
+        \begin{itemize}
+            \item \textit{game\_space\_t *\textbf{create\_blank\_game\_space}} - przyjmuje wymiary planszy, i zwraca gotowy kontener symulacji z pustą planszą o odpowiednich wymiarach
+            \item \textit{void \textbf{set\_max\_iterations}} - przyjmuje kontener symulacji i liczbę iteracji, ustawia ilość iteracji które ma prsebyć symulacja
+            \item \textit{void \textbf{ramdomise\_game\_space}} - przyjmuje kontener symulacji i randomizuje stan planszy
+            \item \textit{void \textbf{plane\_dimension\_guard}} - przyjmuje kontener symulacji i pozycję x i y, sprawdza, czy punkt jest na planszy
+            \item \textit{void \textbf{flip\_cell\_state}} - przyjmuje kontener symulacji i pozycję x i y, zmienia stan komórki
+            \item \textit{unsigned char \textbf{check\_cell\_state}} - przyjmuje kontener symulacji i pozycję x i y, zwraca stan komórki
+            \item \textit{game\_space\_t *\textbf{copy\_game\_space}} - przyjmuje kontener symulacji i zwraca jego dokładną kopie
+            \item \textit{void \textbf{free\_game\_space}} - przyjmuje kontener symulacji i zwalnia zajmowaną przez niego pamięć
+        \end{itemize}
+
+
+    \subsection{\textbf{\textit{game\_space\_display.h}}}
+        Zależności: \textit{ \textbf{game\_space\_structures.h}}, \textit{ \textbf{gifenc.h}}\\\\
+        Ten plik zawiera funkcje odpowiadające za manipulację stanem symulacji.
+
+        \begin{itemize}
+            \item \textit{ge\_GIF *\textbf{create\_gif\_\_timebar}} - przyjmuje kontener symulacji i nazwę dla generowanego pliku, tworzy strukturę reprezentującą gifa przed wyrenderowaniem
+            \item \textit{void \textbf{render\_gif\_frame\_\_timebar}} - przyjmuje kontener symulacji i reprezentację gifa, odpowiada za zamianę stanu symulacji na klatkę gifa
+            \item \textit{void \textbf{render\_png}} - przyjmuje kontener symulacji i renderuje obraz PNG na podstawie jej akutalnego stanu
+        \end{itemize}
+
 \end{document}

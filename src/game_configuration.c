@@ -127,7 +127,7 @@ void run_game_of_life__file(char *file_name) {
                 tmp_x = strtok(parsed_line->value, ",");
                 tmp_y = strtok(NULL, ",");
 
-                change_cell_state(game_space, atoi(tmp_x), atoi(tmp_y));
+                flip_cell_state(game_space, atoi(tmp_x), atoi(tmp_y));
                 config_alive = TRUE;
             }
         }

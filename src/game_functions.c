@@ -24,7 +24,7 @@
 
 
 unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, unsigned int y) {
-    __plane_dimension_guard(game_space, x, y);
+    plane_dimension_guard(game_space, x, y);
 
     unsigned int neigh = 0;
 
@@ -46,7 +46,7 @@ unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, uns
 }
 
 bool_t does_cell_die(game_space_t *game_space, unsigned int x, unsigned int y) {
-    __plane_dimension_guard(game_space, x, y);
+    plane_dimension_guard(game_space, x, y);
     if (game_space->plane[x][y] == DEAD) return FALSE;
 
     unsigned int live_n = count_live_neighbours(game_space, x, y);
@@ -56,7 +56,7 @@ bool_t does_cell_die(game_space_t *game_space, unsigned int x, unsigned int y) {
 }
 
 bool_t does_cell_revive(game_space_t *game_space, unsigned int x, unsigned int y) {
-    __plane_dimension_guard(game_space, x, y);
+    plane_dimension_guard(game_space, x, y);
     if (game_space->plane[x][y] == ALIVE) return FALSE;
 
     if (count_live_neighbours(game_space, x, y) == 3) return TRUE;
@@ -74,10 +74,10 @@ void run_iteration(game_space_t *game_space) {
 
             if (check_cell_state(lookup_space, i, j) == DEAD) {
                 if (does_cell_revive(lookup_space, i, j) == TRUE)
-                    change_cell_state(game_space, i, j);
+                    flip_cell_state(game_space, i, j);
             } else {
                 if (does_cell_die(lookup_space, i, j) == TRUE)
-                    change_cell_state(game_space, i, j);
+                    flip_cell_state(game_space, i, j);
             }
         }
     }
@@ -104,7 +104,7 @@ void run_game_of_life__create_a_gif__timebar(game_space_t *game_space, char *nam
 
     ge_GIF *gif = create_gif__timebar(game_space, name);
 
-    render_gif_frame(game_space, gif);
+    render_gif_frame__timebar(game_space, gif);
 
     printf("%d of %d iterations processed.", game_space->current_iteration, game_space->max_iterations);
     fflush(stdout);

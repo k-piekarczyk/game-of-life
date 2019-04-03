@@ -13,9 +13,9 @@ void set_max_iterations(game_space_t *game_space, unsigned int iter);
 
 void randomise_game_space(game_space_t *game_space);
 
-void __plane_dimension_guard(game_space_t *game_space, unsigned int x, unsigned int y);
+void plane_dimension_guard(game_space_t *game_space, unsigned int x, unsigned int y);
 
-void change_cell_state(game_space_t *game_space, unsigned int x, unsigned int y);
+void flip_cell_state(game_space_t *game_space, unsigned int x, unsigned int y);
 
 unsigned char check_cell_state(game_space_t *game_space, unsigned int x, unsigned int y);
 

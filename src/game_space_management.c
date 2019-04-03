@@ -42,7 +42,7 @@ void randomise_game_space(game_space_t *game_space) {
     }
 }
 
-void __plane_dimension_guard(game_space_t *game_space, unsigned int x, unsigned int y) {
+void plane_dimension_guard(game_space_t *game_space, unsigned int x, unsigned int y) {
     if (x >= game_space->x_dim) {
         printf("X index too high! (Indexing starts at 0)");
         exit(EXIT_FAILURE);
@@ -53,8 +53,8 @@ void __plane_dimension_guard(game_space_t *game_space, unsigned int x, unsigned 
     }
 }
 
-void change_cell_state(game_space_t *game_space, unsigned int x, unsigned int y) {
-    __plane_dimension_guard(game_space, x, y);
+void flip_cell_state(game_space_t *game_space, unsigned int x, unsigned int y) {
+    plane_dimension_guard(game_space, x, y);
 
     if (game_space->plane[x][y] == DEAD) game_space->plane[x][y] = ALIVE;
     else game_space->plane[x][y] = DEAD;
@@ -62,7 +62,7 @@ void change_cell_state(game_space_t *game_space, unsigned int x, unsigned int y)
 }
 
 unsigned char check_cell_state(game_space_t *game_space, unsigned int x, unsigned int y) {
-    __plane_dimension_guard(game_space, x, y);
+    plane_dimension_guard(game_space, x, y);
 
     return game_space->plane[x][y];
 }
