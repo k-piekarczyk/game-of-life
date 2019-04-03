@@ -37,7 +37,7 @@ alive\textgreater{}21,30\\
 alive\textgreater{}22,30\\
 alive\textgreater{}23,30\\
 alive\textgreater{}24,30\\
-Przykładowe wywołania programu:	./gol config\_file
+Przykładowe wywołanie programu:	./gol config\_file
 
 
 \section{Dane wyjściowe}
@@ -55,23 +55,33 @@ Gra toczy się na planszy o określonej wielkości. Komórki mogą znajdować si
 
 \section{Komunikaty błędów}
 
-\begin{enumerate}
+\begin{itemize}
 	\item W przypadku nie podania nazwy pliku z danymi wejściowymi:\\
 	      "Lack of a configuration file.
 	      Correct usage: path.game\_of\_life.exe config\_file"
 
-	\item W przypadku podania nazwy pliku który nie istnieje:\\
+	\item Podania nazwy pliku z danymi wejściowymi który 
+	nie istnieje:\\
 	      "No file 'FileName'."
 
-	\item W przypadku braku potrzebnych danych w pliku:\\
-	      Configuration incomplete! Required values:\\
+	\item Braku potrzebnych danych w pliku:\\
+	      "Configuration incomplete! Required values:\\
 	      - height\\
 	      - width\\
 	      - png \textless{}instead of height and width\textgreater{}\\
 	      - max\_iter\\
-	      - freq or fps
+	      - freq or fps"
+	
+	\item Podania niepoprawnych koordynat żywych komórek:\\
+	      "Y index too high! (Indexing starts at 0)"
+	      
+	\item Podania nazwy pliku png który nie istnieje:\\
+		  "No file with name: FileName!"
+		  
+	\item Wystąpi błąd przy zapisie plików png:\\
+		  "An error occured while writing file: FileName"
 
-\end{enumerate}
+\end{itemize}
 Jeżeli wystąpią powyższe błędy program kończy działanie.
 
 \end{document}
