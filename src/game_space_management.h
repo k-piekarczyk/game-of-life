@@ -1,7 +1,3 @@
-//
-// Created by Krzysztof Piekarczyk on 2019-02-21.
-//
-
 #ifndef GAME_OF_LIFE_GAME_SPACE_H
 #define GAME_OF_LIFE_GAME_SPACE_H
 

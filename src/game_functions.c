@@ -1,7 +1,3 @@
-//
-// Created by Krzysztof Piekarczyk on 2019-03-21.
-//
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -24,7 +20,7 @@
 
 #define GREEN_STR(string) ANSI_COLOR_GREEN string ANSI_COLOR_RESET
 
-#define MOORES_NEIGHBOURHOOD
+//#define MOORES_NEIGHBOURHOOD
 
 
 unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, unsigned int y) {

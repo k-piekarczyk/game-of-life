@@ -1,7 +1,3 @@
-//
-// Created by Krzysztof Piekarczyk on 2019-02-21.
-//
-
 #include <stdio.h>
 #include <string.h>
 #include "game_space_management.h"

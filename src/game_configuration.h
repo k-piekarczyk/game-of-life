@@ -1,7 +1,3 @@
-//
-// Created by Krzysztof Piekarczyk on 2019-03-30.
-//
-
 #include "game_space_structures.h"
 
 #ifndef GAME_OF_LIFE_GAME_CONFIGURATION_H
