@@ -36,3 +36,9 @@ main.o: src/main.c
 	./mdif.sh make-o
 	./mdif.sh out
 	gcc -c src/main.c -o make-o/main.o
+
+docs:
+	pdflatex  -output-directory docs docs/specyfikacja_funkcjonalna.tex
+	pdflatex  -output-directory docs docs/specyfikacja_implementacyjna.tex
+	rm docs/*.aux
+	rm docs/*.log
