@@ -20,7 +20,7 @@
 
 #define GREEN_STR(string) ANSI_COLOR_GREEN string ANSI_COLOR_RESET
 
-//#define MOORES_NEIGHBORHOOD
+#define MOORES_NEIGHBORHOOD
 
 
 unsigned int count_live_neighbors(game_space_t *game_space, unsigned int x, unsigned int y) {
