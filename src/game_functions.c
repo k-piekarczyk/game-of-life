@@ -91,71 +91,8 @@ void run_iteration(game_space_t *game_space) {
     game_space->current_iteration++;
 }
 
-
-void run_game_of_life__display_to_console(game_space_t *game_space, unsigned int snapshot_freq) {
-    printf("Begining Game of Life: "
-           GREEN_STR("%d")
-           " iterations, snapshot every "
-           GREEN_STR("%d")
-           " iterations.\nNeighborhood: ", game_space->max_iterations,
-           snapshot_freq);
-
-#ifdef MOORES_NEIGHBOURHOOD
-    printf(GREEN_STR("Moore's\n\n"));
-#else
-    printf(GREEN_STR("Von Neumann's\n\n"));
-#endif
-
-    print_game_state(game_space);
-
-    while (game_space->current_iteration < game_space->max_iterations) {
-        run_iteration(game_space);
-
-        if (game_space->current_iteration % snapshot_freq == 0 ||
-            game_space->current_iteration == game_space->max_iterations)
-            print_game_state(game_space);
-    }
-
-    printf("\n\nGame of Life ended!\n");
-}
-
-void run_game_of_life__create_a_gif(game_space_t *game_space, char *name, int iter_per_sec) {
-    if(iter_per_sec > 60) {
-        iter_per_sec = 60;
-        printf("WARNING: " GREEN_STR("Iterations per second capped at 60.\n"));
-    }
-
-    int frame_delay = (int) ceil((double) 100 / iter_per_sec);
-    printf("Begining Game of Life: " GREEN_STR("%d") " iterations.\nNeighborhood: ", game_space->max_iterations);
-
-#ifdef MOORES_NEIGHBOURHOOD
-    printf(GREEN_STR("Moore's\n\n"));
-#else
-    printf(GREEN_STR("Von Neumann's\n\n"));
-#endif
-
-    ge_GIF *gif = create_gif(game_space, name);
-
-    render_gif_frame(game_space, gif);
-
-    printf("%d of %d iterations processed.", game_space->current_iteration, game_space->max_iterations);
-    fflush(stdout);
-
-    for (int i = 0; i < game_space->max_iterations; i++) {
-        run_iteration(game_space);
-        render_gif_frame(game_space, gif);
-        ge_add_frame(gif, frame_delay);
-        printf("\r" GREEN_STR("%d") " of " GREEN_STR("%d") " iterations processed.", game_space->current_iteration,
-               game_space->max_iterations);
-        fflush(stdout);
-    }
-
-    ge_close_gif(gif);
-    printf("\n\nGame of Life ended!\n");
-}
-
 void run_game_of_life__create_a_gif__timebar(game_space_t *game_space, char *name, int iter_per_sec) {
-    if(iter_per_sec > 60) {
+    if (iter_per_sec > 60) {
         iter_per_sec = 60;
         printf("WARNING: " GREEN_STR("Iterations per second capped at 60.\n"));
     }

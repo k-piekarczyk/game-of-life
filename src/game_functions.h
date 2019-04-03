@@ -16,9 +16,6 @@ bool_t does_cell_revive(game_space_t *game_space, unsigned int x, unsigned int y
 
 void run_iteration(game_space_t *game_space);
 
-void run_game_of_life__display_to_console(game_space_t *game_space, unsigned int snapshot_freq);
-
-void run_game_of_life__create_a_gif(game_space_t *game_space, char *name, int iter_per_sec);
 void run_game_of_life__create_a_gif__timebar(game_space_t *game_space, char *name, int iter_per_sec);
 
 void run_game_of_life__create_pngs(game_space_t *game_space, unsigned int snapshot_freq);

@@ -20,21 +20,6 @@ uint8_t color_palette[] = {
         0x00, 0x00, 0xFF, /* 3 -> blue */
 };
 
-void print_game_state(game_space_t *game_space) {
-    printf("Iteration %d of %d:\n", game_space->current_iteration, game_space->max_iterations);
-
-    for (int y = 0; y < game_space->y_dim; y++) {
-        for (int x = 0; x < game_space->x_dim; x++) {
-            printf("%c", game_space->plane[x][y]);
-        }
-        printf("\n");
-    }
-}
-
-ge_GIF *create_gif(game_space_t *game_space, char *name) {
-    return ge_new_gif(name, game_space->x_dim, game_space->y_dim, color_palette, 2, 0);
-}
-
 ge_GIF *create_gif__timebar(game_space_t *game_space, char *name) {
     return ge_new_gif(name, game_space->x_dim, game_space->y_dim + TIMEBAR_HEIGHT, color_palette, 2, 0);
 }
