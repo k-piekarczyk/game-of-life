@@ -1,0 +1,73 @@
+\documentclass[12pt]{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\title{Specyfikacja funkcjonalna symulatora gry w życie} 
+\author{Karol Brzeziński, Krzysztof Piekarczyk}
+\date{03.04.2019}
+\begin{document}
+\maketitle
+
+\section{Cel projektu}
+ Program game\_of\_life ma na celu przeprowadzać symulację gry w życie Johna Conwaya. Początkowa generacja jest podawana przez użytkownika lub ustalana losowo. Program powinien umożliwiać przeprowadzenie dowolnej liczby generacji, zapisywać wybrane jako plik png oraz umożliwiać wczytanie wygenerowanych generacji.
+  
+\section{Dane wejściowe}
+Program potrzebuje danych wejściowych, które przechowywane są w pliku:
+\begin{itemize}
+\item width - określa szerokość planszy;
+
+\item height - określa wysokość planszy;
+
+\item alive - wybór komórek które mają być żywe;
+
+\item png - podawane zamiast width, height i alive, wskazuje na plik png z którego skorzysta program;
+
+\item freq - używane w przypadku generacji png, określa częstotliwość tworzenia png;
+
+\item fps - używane w przypadku generacji GIF, określa ilość iteracji na sekundę;
+
+\item max\_iter - ilość przeprowadzonych iteracji symulacji.
+
+\end{itemize}
+Wszystkie dane podawane są w sposób: słowo\textgreater{}wartość.
+Przykładowy plik wywołania:\\
+width\textgreater{}500\\
+height\textgreater{}500\\
+max\_iter\textgreater{}500\\
+freq\textgreater{}50\\
+alive\textgreater{}20,30\\
+alive\textgreater{}21,30\\
+alive\textgreater{}22,30\\
+alive\textgreater{}23,30\\
+alive\textgreater{}24,30\\
+Przykładowe wywołania programu:	./gol config\_file
+
+\section{Dane wyjściowe}
+\begin{itemize}
+\item pliki png - wytwarzane przy kolejnych iteracjach, zapisują aktualną planszę gry
+\item plik GIF - odtwarzający przebieg gry
+\end{itemize}
+\section{Teoria}
+
+Gra toczy się na planszy o określonej wielkości. Komórki mogą znajdować się w jednym w dwóch stanów: "żywa" lub "martwa". Część komórek na planszy jest "żywa". Gdy martwa komórka ma 3 sąsiadów to staje się żywa w następnej iteracji. Gdy żywa ma 2 lub 3 to jej stan się nie zmienia, a w każdej innej sytuacji umiera.
+\section{Komunikaty błędów}
+
+\begin{enumerate}
+\item W przypadku nie podania nazwy pliku z danymi wejściowymi:\\
+"Lack of a configuration file.
+Correct usage: path.game\_of\_life.exe config\_file"
+
+\item W przypadku podania nazwy pliku który nie istnieje:\\
+"No file 'FileName'."
+
+\item W przypadku braku potrzebnych danych w pliku:\\
+Configuration incomplete! Required values:\\
+        - height\\
+        - width\\
+        - png \textless{}instead of height and width\textgreater{}\\
+        - max\_iter\\
+        - freq or fps
+        
+\end{enumerate}
+Jeżeli wystąpią powyższe błędy program kończy działanie.
+
+\end{document}
