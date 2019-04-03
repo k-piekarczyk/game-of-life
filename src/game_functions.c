@@ -20,7 +20,7 @@
 
 #define GREEN_STR(string) ANSI_COLOR_GREEN string ANSI_COLOR_RESET
 
-//#define MOORES_NEIGHBOURHOOD
+//#define MOORES_NEIGHBORHOOD
 
 
 unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, unsigned int y) {
@@ -34,7 +34,7 @@ unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, uns
     if (y != 0 && game_space->plane[x][y - 1] == ALIVE) neigh++;
     if (y != game_space->y_dim - 1 && game_space->plane[x][y + 1] == ALIVE) neigh++;
 
-#ifdef MOORES_NEIGHBOURHOOD
+#ifdef MOORES_NEIGHBORHOOD
     if (x != 0 && y != 0 && game_space->plane[x - 1][y - 1] == ALIVE) neigh++;
     if (x != 0 && y != game_space->y_dim - 1 && game_space->plane[x - 1][y + 1] == ALIVE) neigh++;
 
@@ -96,7 +96,7 @@ void run_game_of_life__create_a_gif__timebar(game_space_t *game_space, char *nam
 
     printf("Begining Game of Life: " GREEN_STR("%d") "\nNeighborhood: ", game_space->max_iterations);
 
-#ifdef MOORES_NEIGHBOURHOOD
+#ifdef MOORES_NEIGHBORHOOD
     printf(GREEN_STR("Moore's\n\n"));
 #else
     printf(GREEN_STR("Von Neumann's\n\n"));
@@ -130,7 +130,7 @@ void run_game_of_life__create_pngs(game_space_t *game_space, unsigned int snapsh
            " iterations.\nNeighborhood: ", game_space->max_iterations,
            snapshot_freq);
 
-#ifdef MOORES_NEIGHBOURHOOD
+#ifdef MOORES_NEIGHBORHOOD
     printf(GREEN_STR("Moore's\n\n"));
 #else
     printf(GREEN_STR("Von Neumann's\n\n"));
