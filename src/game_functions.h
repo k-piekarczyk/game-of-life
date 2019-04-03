@@ -4,7 +4,7 @@
 #include "game_space_structures.h"
 #include "game_space_management.h"
 
-unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, unsigned int y);
+unsigned int count_live_neighbors(game_space_t *game_space, unsigned int x, unsigned int y);
 
 bool_t does_cell_die(game_space_t *game_space, unsigned int x, unsigned int y);
 

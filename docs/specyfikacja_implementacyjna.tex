@@ -2,7 +2,7 @@
 \usepackage{polski}
 \usepackage[utf8]{inputenc}
 \title{Specyfikacja implementacyjna symulatora gry w życie}
-\author{Karol Brzeziński, Krzysztof Piekarczyk}
+\author{Krzysztof Piekarczyk, Karol Brzeziński}
 \date{03.04.2019}
 \begin{document}
 \maketitle
@@ -45,13 +45,37 @@ Wszystkie pliki składające się na program znajdują się w dolderze \textbf{\
 
 
     \subsection{\textbf{\textit{game\_space\_display.h}}}
-        Zależności: \textit{ \textbf{game\_space\_structures.h}}, \textit{ \textbf{gifenc.h}}\\\\
+        Zależności: \textit{ \textbf{game\_space\_structures.h}}, \textit{ \textbf{gifenc.h}}, \textit{ \textbf{lodepng.h}}\\\\
         Ten plik zawiera funkcje odpowiadające za manipulację stanem symulacji.
 
         \begin{itemize}
             \item \textit{ge\_GIF *\textbf{create\_gif\_\_timebar}} - przyjmuje kontener symulacji i nazwę dla generowanego pliku, tworzy strukturę reprezentującą gifa przed wyrenderowaniem
             \item \textit{void \textbf{render\_gif\_frame\_\_timebar}} - przyjmuje kontener symulacji i reprezentację gifa, odpowiada za zamianę stanu symulacji na klatkę gifa
             \item \textit{void \textbf{render\_png}} - przyjmuje kontener symulacji i renderuje obraz PNG na podstawie jej akutalnego stanu
+        \end{itemize}
+
+
+    \subsection{\textbf{\textit{game\_functions.h}}}
+        Zależności: \textit{ \textbf{game\_space\_structures.h}}, \textit{ \textbf{game\_space\_management.h}}, \textbf{\textit{game\_space\_display.h}}\\\\
+        Ten plik zawiera funkcje odpowiadające za symulację.
+
+        \begin{itemize}
+            \item \textit{unsigned int *\textbf{count\_live\_neighbors}} - przyjmuje kontener symulacji i koordynaty x i y, zwraca liczbę żywych sąsiadów
+            \item \textit{bool\_t \textbf{does\_cell\_die}} - przyjmuje kontener symulacji i koordynaty x i y, określa czy komórka umrze
+            \item \textit{bool\_t \textbf{does\_cell\_revive}} - przyjmuje kontener symulacji i koordynaty x i y, określa czy komórka ożyje
+            \item \textit{void \textbf{run\_iteration}} - przyjmuje kontener symulacji i wykonuje jedną iterację symulacji
+            \item \textit{void \textbf{run\_game\_of\_life\_\_create\_a\_gif\_\_timebar}} - przyjmuje kontener symulacji, nazwę dla pliku wyjściowego oraz liczbę iteracji na sekundę zawartych w gifie, przetwarza symulację i tworzy na jej podstawie plik GIF
+            \item \textit{void \textbf{run\_game\_of\_life\_\_create\_pngs}} - przyjmuje kontener symulacji oraz liczbę iteracji co które ma zostać stworzony obraz PNG odwzorowania stanu symulacji, przetwarza symulację i tworzy na jej podstawie pliki PNG
+        \end{itemize}
+
+
+    \subsection{\textbf{\textit{game\_configuration.h}}}
+        Zależności: \textit{ \textbf{game\_space\_structures.h}}, \textbf{\textit{game\_functions.h}, \textbf{\textit{game\_space\_management.h}\\\\
+        Ten plik zawiera funkcje odpowiadające za konfigurację symujacji.
+
+        \begin{itemize}
+            \item \textit{game\_space\_t *\textbf{create\_game\_of\_life\_\_png}} - przyjmuję nazwę pliku PNG, i tworzy na jego podstawie kontener symulacji z odtworzonym stanem początkowym planszy (w pełni czarny pixel to jedna żywa komórka)
+            \item \textit{void \textbf{run\_game\_of\_life\_\_file}} - przyjmuje nazwę pliku konfiguracyjnego, i na jego podstawie przeprowadza symulację
         \end{itemize}
 
 \end{document}

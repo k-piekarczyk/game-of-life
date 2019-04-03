@@ -23,7 +23,7 @@
 //#define MOORES_NEIGHBORHOOD
 
 
-unsigned int count_live_neighbours(game_space_t *game_space, unsigned int x, unsigned int y) {
+unsigned int count_live_neighbors(game_space_t *game_space, unsigned int x, unsigned int y) {
     plane_dimension_guard(game_space, x, y);
 
     unsigned int neigh = 0;
@@ -49,7 +49,7 @@ bool_t does_cell_die(game_space_t *game_space, unsigned int x, unsigned int y) {
     plane_dimension_guard(game_space, x, y);
     if (game_space->plane[x][y] == DEAD) return FALSE;
 
-    unsigned int live_n = count_live_neighbours(game_space, x, y);
+    unsigned int live_n = count_live_neighbors(game_space, x, y);
 
     if (live_n < 2 || live_n > 3) return TRUE;
     else return FALSE;
@@ -59,7 +59,7 @@ bool_t does_cell_revive(game_space_t *game_space, unsigned int x, unsigned int y
     plane_dimension_guard(game_space, x, y);
     if (game_space->plane[x][y] == ALIVE) return FALSE;
 
-    if (count_live_neighbours(game_space, x, y) == 3) return TRUE;
+    if (count_live_neighbors(game_space, x, y) == 3) return TRUE;
     else return FALSE;
 }
 
