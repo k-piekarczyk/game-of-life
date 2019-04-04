@@ -1,19 +1,59 @@
 \documentclass[12pt]{article}
 \usepackage{polski}
 \usepackage[utf8]{inputenc}
-\title{Specyfikacja implementacyjna symulatora gry w życie}
+\title{Specyfikacja funkcjonalna symulatora gry w życie}
 \author{Krzysztof Piekarczyk, Karol Brzeziński}
 \date{03.04.2019}
 \begin{document}
 \maketitle
 
 
-\section{Informacje ogólne}
-By wywołać program, należy użyć: \textbf{\textit{./gol \textless plik\_konfiguracyjny\textgreater}}.
-Przykładowe pliki konfiguracyjne znajdują się w folderze \textbf{\textit{demo-conf}}.\\
-\\
-Przy poprawnym rozpoczęciu, program będzie na bierząco informował o postępach symulacji.
+\section{Cel projektu}
 
+Program game\_of\_life ma na celu przeprowadzać symulację gry w życie Johna Conwaya, udostępnić użytkownikowi utworzenie początkowej generacji i obserwacje zmieniającej się planszy.
+
+\section{Teoria}
+
+Gra toczy się na planszy o określonej wielkości. Komórki mogą znajdować się w jednym w dwóch stanów: "żywa" lub "martwa". Część komórek na planszy jest "żywa". Gdy martwa komórka ma 3 sąsiadów to staje się żywa w następnej iteracji. Gdy żywa ma 2 lub 3 to jej stan się nie zmienia, a w każdej innej sytuacji umiera.
+
+\section{Możliwości programu}
+Początkowa generacja jest podawana przez użytkownika w formie tekstowej do pliku. Część z danych początkowych, takich jak wysokość, szerokość i koordynaty żywych komórek może zostać zastąpiona ścieżką do pliku png przedstawiającego planszę do gry. W przypadku nie podania żadnych żywych komórek zostaną umiejscowione losowo. Program umożliwia przeprowadzenie wybranej przez użytkownika liczby iteracji. W zależności od podanych danych program wygeneruje pliki png lub GIF-a.
+
+\section{Dane wejściowe}
+
+Program potrzebuje danych wejściowych, które przechowywane są w pliku:
+\begin{itemize}
+	\item width - określa szerokość planszy, musi być dodatnia;
+	\item height - określa wysokość planszy, musi być dodatnia;
+	\item alive - wybór komórek które mają być żywe;
+	\item png - podawane zamiast width, height i alive, wskazuje na plik png z którego skorzysta program aby wygenerować planszę;
+	\item freq - używane w przypadku generacji plików png, określa ich częstotliwość tworzenia;
+	\item fps - używane w przypadku generacji GIF, określa ilość iteracji na sekundę, maksymalnie może wynieść 60;
+	\item max\_iter - ilość przeprowadzonych iteracji symulacji, w przypadku GIF-a maksymalnie 500 iteracji.
+\end{itemize}
+
+Wszystkie dane podawane są w sposób: klucz\textgreater{}wartość.
+Przykładowy plik wywołania:\\
+width\textgreater{}500\\
+height\textgreater{}500\\
+max\_iter\textgreater{}500\\
+freq\textgreater{}50\\
+alive\textgreater{}20,30\\
+alive\textgreater{}21,30\\
+alive\textgreater{}22,30\\
+alive\textgreater{}23,30\\
+alive\textgreater{}24,30\\
+
+\section{Dane wyjściowe}
+
+\begin{itemize}
+	\item pliki png - wytwarzane przy kolejnych iteracjach, zapisują aktualną planszę gry
+	\item plik GIF - odtwarzający przebieg gry
+\end{itemize}
+
+\section{Wywoływanie programu}
+
+By wywołać program, należy użyć: \textbf{\textit{./gol \textless plik\_konfiguracyjny\textgreater}}.
 
 \section{Opis plików nagłówkowych}
 Wszystkie pliki składające się na program znajdują się w dolderze \textbf{\textit{src}}.
@@ -77,5 +117,46 @@ Wszystkie pliki składające się na program znajdują się w dolderze \textbf{\
             \item \textit{game\_space\_t *\textbf{create\_game\_of\_life\_\_png}} - przyjmuję nazwę pliku PNG, i tworzy na jego podstawie kontener symulacji z odtworzonym stanem początkowym planszy (w pełni czarny pixel to jedna żywa komórka)
             \item \textit{void \textbf{run\_game\_of\_life\_\_file}} - przyjmuje nazwę pliku konfiguracyjnego, i na jego podstawie przeprowadza symulację
         \end{itemize}
+        
+\section{Scenariusz działania programu}
+
+\begin{itemize}
+	        \item Uruchomienie programu z podaniem pliku z danymi
+	        \item Wczytanie danych z pliku
+	        \item Utworzenie planszy gry i wypełnienie jej komórkami
+	        \item Przeprowadzenie symulacji gry i zapis do pliku aktualnych stanów planszy
+	        \item Zakończenie działania programu
+\end{itemize}
+
+\section{Komunikaty błędów}
+
+\begin{itemize}
+	\item W przypadku nie podania nazwy pliku z danymi wejściowymi:\\
+	      "Lack of a configuration file.
+	      Correct usage: path.game\_of\_life.exe config\_file"
+
+	\item Podania nazwy pliku z danymi wejściowymi który 
+	nie istnieje:\\
+	      "No file 'FileName'."
+
+	\item Braku potrzebnych danych w pliku:\\
+	      "Configuration incomplete! Required values:\\
+	      - height\\
+	      - width\\
+	      - png \textless{}instead of height and width\textgreater{}\\
+	      - max\_iter\\
+	      - freq or fps"
+	
+	\item Podania niepoprawnych koordynat żywych komórek:\\
+	      "Y index too high! (Indexing starts at 0)"
+	      
+	\item Podania nazwy pliku png który nie istnieje:\\
+		  "No file with name: FileName!"
+		  
+	\item Wystąpi błąd przy zapisie plików png:\\
+		  "An error occured while writing file: FileName"
+
+\end{itemize}
+Jeżeli wystąpią powyższe błędy program kończy działanie.
 
 \end{document}
