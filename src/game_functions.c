@@ -10,15 +10,19 @@
 #ifdef __WIN32
 #define ANSI_COLOR_GREEN   ""
 #define ANSI_COLOR_RESET   ""
+#define ANSI_COLOR_RED     ""
 #elif defined __WIN64
 #define ANSI_COLOR_GREEN   ""
 #define ANSI_COLOR_RESET   ""
+#define ANSI_COLOR_RED     ""
 #else
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
+#define ANSI_COLOR_RED     "\x1b[31m"
 #endif
 
 #define GREEN_STR(string) ANSI_COLOR_GREEN string ANSI_COLOR_RESET
+#define RED_STR(string) ANSI_COLOR_RED string ANSI_COLOR_RESET
 
 #define MOORES_NEIGHBORHOOD
 
@@ -90,7 +94,12 @@ void run_iteration(game_space_t *game_space) {
 void run_game_of_life__create_a_gif__timebar(game_space_t *game_space, char *name, int iter_per_sec) {
     if (iter_per_sec > 60) {
         iter_per_sec = 60;
-        printf("WARNING: " GREEN_STR("Iterations per second capped at 60.\n"));
+        printf("WARNING: " RED_STR("Iterations per second capped at 60.\n"));
+    }
+
+    if (game_space->max_iterations > 500) {
+        set_max_iterations(game_space, 500);
+        printf("WARNING: " RED_STR("Number of iterations capped at 500 due to GIF encoder library limitations.\n"));
     }
     int frame_delay = (int) ceil((double) 100 / iter_per_sec);
 

@@ -20,15 +20,6 @@ ge_GIF *create_gif__timebar(game_space_t *game_space, char *name) {
     return ge_new_gif(name, game_space->x_dim, game_space->y_dim + TIMEBAR_HEIGHT, color_palette, 2, 0);
 }
 
-void render_gif_frame(game_space_t *game_space, ge_GIF *gif) {
-    for (int y = 0; y < game_space->y_dim; y++) {
-        for (int x = 0; x < game_space->x_dim; x++) {
-            if (game_space->plane[x][y] == ALIVE) gif->frame[x + y * game_space->x_dim] = 1;
-            else gif->frame[x + y * game_space->x_dim] = 0;
-        }
-    }
-}
-
 void render_gif_frame__timebar(game_space_t *game_space, ge_GIF *gif) {
     if (gif->h < game_space->y_dim + TIMEBAR_HEIGHT) {
         printf("\n\nGIF dimensions too small to fit a timebar!");
