@@ -37,11 +37,11 @@ main.o: src/main.c
 	./mdif.sh out
 	gcc -c src/main.c -o make-o/main.o
 
-docs-fu: docs/raport.tex
+docs-rap: docs/raport.tex
 	pdflatex -halt-on-error -output-directory docs docs/raport.tex
 	@rm docs/*.aux
 	@rm docs/*.log
-	@echo "[docs-fu] done docs/raport.pdf, logs cleaned up"
+	@echo "[docs-rap] done docs/raport.pdf, logs cleaned up"
 
-docs: docs-fu docs-im
+docs: docs-rap
 	@echo "done docs"
