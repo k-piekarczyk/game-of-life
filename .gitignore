@@ -127,4 +127,7 @@ Temporary Items
 # Ignore all local history of files
 .history
 
+
+**/*.pdf
+gol
 # End of https://www.gitignore.io/api/macos,clion+all,visualstudiocode
